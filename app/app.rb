@@ -18,8 +18,7 @@
 ##########################################################
 
 # => Constants
-# => This calls the constants for the application
-# => Used to have all the constants defined here, but need them in a separate dir
+# => Should be loaded by Bundler, but this has to do for now
 require_relative '../config/constants'
 
 ##########################################################
@@ -64,6 +63,11 @@ class App < Sinatra::Base
     # => https://github.com/nakajima/rack-flash#sinatra
     # => https://github.com/vast/sinatra-redirect-with-flash
     enable :sessions # => used by RedirectWithFlash
+
+    # => SendGrid
+    # => This allows us to hook into SG to send emails etc
+    # => https://github.com/sendgrid/sendgrid-ruby#with-mail-helper-class
+    include SendGrid
 
     # => Register
     # => This allows us to call the various extensions for the system
@@ -172,6 +176,7 @@ class App < Sinatra::Base
   # => Shows Pages/Databases the user has created
   # => Required authentication
   get '/' do
+    haml :index
   end ## get
 
   ##############################################################

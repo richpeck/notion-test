@@ -76,11 +76,14 @@ GEM
       io-console (~> 0.5)
     require_all (3.0.0)
     ruby2_keywords (0.0.2)
+    ruby_http_client (3.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    sendgrid-ruby (6.0.4)
+      ruby_http_client (~> 3.3.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -135,6 +138,7 @@ DEPENDENCIES
   rake
   require_all (~> 3.0)
   sass (~> 3.7, >= 3.7.4)
+  sendgrid-ruby (~> 6.0, >= 6.0.4)
   sinatra (~> 2.0, >= 2.0.7)
   sinatra-activerecord (~> 2.0, >= 2.0.14)
   sinatra-asset-pipeline (~> 2.2)!

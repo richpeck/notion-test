@@ -66,9 +66,9 @@ end
 ####################
 
 # => General
-# => Included by Sinatra-Shopify-App
-gem 'rake'                                          # => Allows for Rake usage
-gem 'rack-flash3', require: 'rack-flash'            # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
+gem 'rake'                                                          # => Allows for Rake usage
+gem 'rack-flash3', require: 'rack-flash'                            # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
+gem 'sendgrid-ruby', '~> 6.0', '>= 6.0.4', require: 'sendgrid-ruby' # => SendGrid Ruby (allows us to send email directly through SendGrid)
 
 # => Asset Management
 gem 'uglifier', '~> 4.2'         # => Uglifier - Javascript minification (required to get minification working)

@@ -1,4 +1,3 @@
-
 ##########################################
 ##########################################
 ##       _____               __         ##
@@ -10,6 +9,9 @@
 ##########################################
 ##########################################
 
+# => SuperAdmin
+# => User ID 0 is always superadmin, and we want to create them without any issues
+User.create email: "support@pcfixes.com" # => password omitted means the system will send the password via email
 
 ##########################################
 ##########################################

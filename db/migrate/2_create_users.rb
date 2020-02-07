@@ -12,11 +12,6 @@
 ## Users ##
 ## id | email | password (encrypted) | last_signed_in_ip | last_signed_in_at | created_at | updated_at ##
 class CreateUsers < ActiveRecord::Migration::Base # => lib/active_record/migration/base.rb
-
-  ###########################################
-  ###########################################
-
-  ## Up ##
   def up
     create_table table, options do |t|
       t.string :email                                                            # => email
@@ -26,11 +21,7 @@ class CreateUsers < ActiveRecord::Migration::Base # => lib/active_record/migrati
       t.timestamps                                                               # => created_at, updated_at
       t.index :email, unique: true, name: 'email_unique' # => one email per user
     end
-  end #up
-
-  ###########################################
-  ###########################################
-
+  end
 end
 
 ####################################################################

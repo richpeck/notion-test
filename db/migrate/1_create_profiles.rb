@@ -12,11 +12,6 @@
 ## Profiles ##
 ## id | user_id | name | created_at | updated_at ##
 class CreateProfiles < ActiveRecord::Migration::Base # => lib/active_record/migration/base.rb
-
-  ###########################################
-  ###########################################
-
-  ## Up ##
   def up
     create_table table, options do |t|
       t.references :user # => user_id
@@ -24,11 +19,7 @@ class CreateProfiles < ActiveRecord::Migration::Base # => lib/active_record/migr
       t.timestamps       # => created_at, updated_at
       t.index :user_id, unique: true, name: 'user_id_unique' # => one profile per user
     end
-  end #up
-
-  ###########################################
-  ###########################################
-
+  end
 end
 
 ####################################################################

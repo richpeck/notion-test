@@ -15,10 +15,11 @@
 
 ## Association ##
 ## A link between two or more elements here allows us to manage the system in the front end
-## id | associatiable_type | associatiable_id | associated_type | associated_id | created_at | updated_at ##
+## id | user_id | associatiable_type | associatiable_id | associated_type | associated_id | created_at | updated_at ##
 class Association < ActiveRecord::Base
 
   # => Allows us to match any type of object to another
+  belongs_to :user
   belongs_to :associatiable, 	polymorphic: true
   belongs_to :associated, 	  polymorphic: true
 
