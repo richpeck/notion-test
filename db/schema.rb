@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2014_04_13_221330) do
+ActiveRecord::Schema.define(version: 2) do
 
   create_table "associations", force: :cascade do |t|
     t.string "associatiable_type"
@@ -22,7 +22,23 @@ ActiveRecord::Schema.define(version: 2014_04_13_221330) do
     t.index ["associatiable_type", "associatiable_id"], name: "index_associations_on_associatiable_type_and_associatiable_id"
   end
 
+  create_table "profiles", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+    t.index ["user_id"], name: "user_id_unique", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password"
+    t.string "last_signed_in_ip"
+    t.datetime "last_signed_in_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "email_unique", unique: true
   end
 
 end

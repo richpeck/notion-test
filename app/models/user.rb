@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   # => Delegations
   # => @user.profile_name
-  delegate :name, :first_name, :slug, :avatar, to: :profile
+  delegate :name, :first_name, to: :profile # => @user.name
   accepts_nested_attributes_for :profile
 
 end
