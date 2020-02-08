@@ -69,6 +69,11 @@ class App < Sinatra::Base
     # => https://github.com/sendgrid/sendgrid-ruby#with-mail-helper-class
     include SendGrid
 
+    # => Warden
+    # => This was originally meant to be inside this file, but too much
+    # => https://github.com/sklise/sinatra-warden-example
+    include Auth
+
     # => Register
     # => This allows us to call the various extensions for the system
     register Sinatra::Cors                # => Protects from unauthorized domain activity
@@ -94,68 +99,68 @@ class App < Sinatra::Base
   ##########################################################
   ##########################################################
 
-  # => General
-  # => Allows us to determine various specifications inside the app
-  set :haml, { layout: :'layouts/application' } # https://stackoverflow.com/a/18303130/1143732
-  set :views, Proc.new { File.join(root, "views") } # required to get views working (defaulted to ./views)
-  set :public_folder, File.join(root, "..", "public") # Root dir fucks up (public_folder defaults to root) http://sinatrarb.com/configuration.html#root---the-applications-root-directory
+    # => General
+    # => Allows us to determine various specifications inside the app
+    set :haml, { layout: :'layouts/application' } # https://stackoverflow.com/a/18303130/1143732
+    set :views, Proc.new { File.join(root, "views") } # required to get views working (defaulted to ./views)
+    set :public_folder, File.join(root, "..", "public") # Root dir fucks up (public_folder defaults to root) http://sinatrarb.com/configuration.html#root---the-applications-root-directory
 
-  # => Required for CSRF
-  # => https://cheeyeo.uk/ruby/sinatra/padrino/2016/05/14/padrino-sinatra-rack-authentication-token/
-  set :protect_from_csrf, true
-
-  ##########################################################
-  ##########################################################
-
-  # => Asset Pipeline
-  # => Allows us to precompile assets as you would in Rails
-  # => https://github.com/kalasjocke/sinatra-asset-pipeline#customization
-  set :assets_prefix, '/dist' # => Needed to access assets in frontend
-  set :assets_public_path, File.join(public_folder, assets_prefix.strip) # => Needed to tell Sprockets where to put assets
-  set :assets_css_compressor, :sass
-  set :assets_js_compressor,  :uglifier
-  set :assets_precompile, %w[javascripts/app.js stylesheets/app.sass *.png *.jpg *.gif *.svg] # *.png *.jpg *.svg *.eot *.ttf *.woff *.woff2
-  set :precompiled_environments, %i(development test staging production) # => Only precompile in staging & production
-
-  # => Register
-  # => Needs to be below definitions
-  register Sinatra::AssetPipeline
+    # => Required for CSRF
+    # => https://cheeyeo.uk/ruby/sinatra/padrino/2016/05/14/padrino-sinatra-rack-authentication-token/
+    set :protect_from_csrf, true
 
   ##########################################################
   ##########################################################
 
-  # => Sprockets
-  # => This is for the layout (calling sprockets helpers etc)
-  # => https://github.com/petebrowne/sprockets-helpers#setup
-  configure do
+    # => Asset Pipeline
+    # => Allows us to precompile assets as you would in Rails
+    # => https://github.com/kalasjocke/sinatra-asset-pipeline#customization
+    set :assets_prefix, '/dist' # => Needed to access assets in frontend
+    set :assets_public_path, File.join(public_folder, assets_prefix.strip) # => Needed to tell Sprockets where to put assets
+    set :assets_css_compressor, :sass
+    set :assets_js_compressor,  :uglifier
+    set :assets_precompile, %w[javascripts/app.js stylesheets/app.sass *.png *.jpg *.gif *.svg] # *.png *.jpg *.svg *.eot *.ttf *.woff *.woff2
+    set :precompiled_environments, %i(staging production) # => Only precompile in staging & production
 
-    # RailsAssets
-    # Required to get Rails Assets gems working with Sprockets/Sinatra
-    # https://github.com/rails-assets/rails-assets-sinatra#applicationrb
-    if defined?(RailsAssets)
-      RailsAssets.load_paths.each do |path|
-        settings.sprockets.append_path(path)
-      end #RailsAssets
-    end #defined
-
-    # => Paths
-    # => Used to add assets to asset pipeline
-    %w(stylesheets javascripts images).each do |folder|
-      sprockets.append_path File.join(root, 'assets', folder)
-      sprockets.append_path File.join(root, '..', 'vendor', 'assets', folder)
-    end #paths
-
-  end
+    # => Register
+    # => Needs to be below definitions
+    register Sinatra::AssetPipeline
 
   ##########################################################
   ##########################################################
 
-  ## CORS ##
-  ## Only allow requests from domain ##
-  set :allow_origin,   URI::HTTPS.build(host: DOMAIN).to_s
-  set :allow_methods,  "GET,POST,PUT,DELETE"
-  set :allow_headers,  "accept,content-type,if-modified-since"
-  set :expose_headers, "location,link"
+    # => Sprockets
+    # => This is for the layout (calling sprockets helpers etc)
+    # => https://github.com/petebrowne/sprockets-helpers#setup
+    configure do
+
+      # RailsAssets
+      # Required to get Rails Assets gems working with Sprockets/Sinatra
+      # https://github.com/rails-assets/rails-assets-sinatra#applicationrb
+      if defined?(RailsAssets)
+        RailsAssets.load_paths.each do |path|
+          settings.sprockets.append_path(path)
+        end #RailsAssets
+      end #defined
+
+      # => Paths
+      # => Used to add assets to asset pipeline
+      %w(stylesheets javascripts images).each do |folder|
+        sprockets.append_path File.join(root, 'assets', folder)
+        sprockets.append_path File.join(root, '..', 'vendor', 'assets', folder)
+      end #paths
+
+    end
+
+  ##########################################################
+  ##########################################################
+
+    ## CORS ##
+    ## Only allow requests from domain ##
+    set :allow_origin,   URI::HTTPS.build(host: DOMAIN).to_s
+    set :allow_methods,  "GET,POST,PUT,DELETE"
+    set :allow_headers,  "accept,content-type,if-modified-since"
+    set :expose_headers, "location,link"
 
   ##############################################################
   ##############################################################
@@ -176,6 +181,7 @@ class App < Sinatra::Base
   # => Shows Pages/Databases the user has created
   # => Required authentication
   get '/' do
+    env['warden'].authenticate! # => required to ensure protection
     haml :index
   end ## get
 

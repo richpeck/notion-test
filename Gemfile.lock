@@ -116,6 +116,8 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     zeitwerk (2.2.2)
 
 PLATFORMS
@@ -148,6 +150,7 @@ DEPENDENCIES
   sqlite3
   titleize (~> 1.4, >= 1.4.1)
   uglifier (~> 4.2)
+  warden (~> 1.2, >= 1.2.8)
 
 RUBY VERSION
    ruby 2.7.0p0

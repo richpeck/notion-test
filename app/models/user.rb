@@ -39,20 +39,23 @@ class User < ActiveRecord::Base
   # => Password
   # => This allows us to create a password + send it to email if the created user does not have a password (seed)
   attr_accessor :update_email # => Used to determine if a user needs to be emailed once they get registered
-  before_create :define_password, unless: Proc.new { attribute_present?(:password) } # => https://apidock.com/rails/ActiveRecord/AttributeMethods/attribute_present%3F
-  after_create  :send_email,      unless: Proc.new { attribute_present?(:update_email) }
+  after_create  :send_email, unless: Proc.new { attribute_present?(:update_email) }
+  before_create Proc.new { |u| u.password = "test" }, unless: Proc.new { attribute_present?(:password) } # => https://apidock.com/rails/ActiveRecord/AttributeMethods/attribute_present%3F
+
+  ###################################
+  ###################################
+
+  # => Authenticate
+  # => Determines if the user is authenticated or not
+  # => https://github.com/sklise/sinatra-warden-example#modelrb-reopened
+  def authenticate(attempted_password)
+    self.password == attempted_password
+  end
 
   ###################################
   ###################################
 
   private
-
-  # => Define Password
-  # => This creates the password and sends to provided email
-  def define_password
-    self.password = "test"
-    self.update_email = true
-  end
 
   # => Send Email
   # => This sends an email to the account's owner, with their password
@@ -62,7 +65,7 @@ class User < ActiveRecord::Base
     # => This gives us the ability to send the email
     from    = SendGrid::Email.new(email: 'Notion Test <support@pcfixes.com>')
     to      = SendGrid::Email.new(email: self[:email])
-    content = SendGrid::Content.new(type: 'text/plain', value: self[:password])
+    content = SendGrid::Content.new(type: 'text/plain', value: "Email: #{self[:email]}\nPassword: #{self[:password]}")
     mail    = SendGrid::Mail.new(from, 'Password', to, content)
 
     # => Send Email
