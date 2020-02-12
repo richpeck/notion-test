@@ -14,6 +14,7 @@
 
 ## Libs ##
 #= require jquery
+#= require parsleyjs
 
 ##########################################################
 ##########################################################
@@ -24,8 +25,8 @@ $(document).on "click", "flash > div", (e)->
 
   ## Fade Out ##
   ## After this, remove from the DOM ##
-  $(this).animate { height: 0, opacity: 0 }, 100, ->
-    $(this).remove
+  $(this).animate { height: 0, opacity: 0 }, 50, ->
+    $(this).remove()
 
 ##########################################################
 ##########################################################

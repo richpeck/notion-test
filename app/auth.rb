@@ -78,14 +78,14 @@ module Auth
         end
 
         def authenticate!
-          user = User.first(username: params['user']['username'])
+          user = User.find_by email: params['user']['email'] # => email is unique, so any records will be the only record
 
           if user.nil?
-            throw(:warden, message: "The username you entered does not exist.")
+            throw(:warden, message: "Email does not exist.")
           elsif user.authenticate(params['user']['password'])
             success!(user)
           else
-            throw(:warden, message: "The username and password combination ")
+            throw(:warden, message: "Bad password.")
           end
         end
       end
@@ -127,7 +127,7 @@ module Auth
       # => Where to send the user if they are not authorized to view a page (IE they hit a page, and it redirects them to the unauthorized page)
       post "/#{@@unauth}" do
         session[:return_to] ||= env['warden.options'][:attempted_path]
-        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in", notice: "Test"
+        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in"
       end
 
       #############################################
