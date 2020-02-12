@@ -19,6 +19,12 @@
 # => May need to change the name of the file
 module Auth
 
+  # => Vars
+  # => Used for login/logout routes etc
+  @@login  = 'login'
+  @@logout = 'logout'
+  @@unauth = 'unauthenticated'
+
   # => Included
   # => https://stackoverflow.com/a/28009954/1143732
   def self.included(base)
@@ -44,7 +50,7 @@ module Auth
           # The action is a route to send the user to when
           # warden.authenticate! returns a false answer. We'll show
           # this route below.
-          action: 'auth/unauthenticated'
+          action: @@unauth
         # When a user tries to log in and cannot, this specifies the
         # app to send the user to.
         config.failure_app = self
@@ -97,20 +103,20 @@ module Auth
 
       # => Login (GET)
       # => Standard login form (no need to set anything except the HTML elements)
-      get '/login' do
-        haml 'auth/login'
+      get "/#{@@login}" do
+        haml :'auth/login'
       end
 
       # => Login (POST)
       # => Where the login form submits to (allows us to process the request)
-      post '/login' do
+      post "/#{@@login}" do
         env['warden'].authenticate!
         redirect (session[:return_to].nil? ? '/' : session[:return_to]), success: "Successfully Logged In"
       end
 
       # => Logout (GET)
       # => Request to log out of the system (allows us to perform session destroy)
-      get '/logout' do
+      get "/#{@@logout}" do
         env['warden'].raw_session.inspect
         env['warden'].logout
         redirect '/', success: "Successfully Logged Out"
@@ -118,9 +124,9 @@ module Auth
 
       # => Unauthenticated (POST)
       # => Where to send the user if they are not authorized to view a page (IE they hit a page, and it redirects them to the unauthorized page)
-      post '/unauthenticated' do
+      post "/#{@@unauth}" do
         session[:return_to] ||= env['warden.options'][:attempted_path]
-        redirect '/auth/login', error: env['warden.options'][:message] || "You must log in"
+        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in"
       end
 
       #############################################

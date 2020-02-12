@@ -64,16 +64,6 @@ class App < Sinatra::Base
     # => https://github.com/vast/sinatra-redirect-with-flash
     enable :sessions # => used by RedirectWithFlash
 
-    # => SendGrid
-    # => This allows us to hook into SG to send emails etc
-    # => https://github.com/sendgrid/sendgrid-ruby#with-mail-helper-class
-    include SendGrid
-
-    # => Warden
-    # => This was originally meant to be inside this file, but too much
-    # => https://github.com/sklise/sinatra-warden-example
-    include Auth
-
     # => Register
     # => This allows us to call the various extensions for the system
     register Sinatra::Cors                # => Protects from unauthorized domain activity
@@ -82,10 +72,20 @@ class App < Sinatra::Base
     register Sinatra::MultiRoute          # => Multi Route (allows for route :put, :delete)
     register Sinatra::Namespace           # => Namespace (http://sinatrarb.com/contrib/namespace.html)
 
+    # => Flash
+    # => Allows us to use the "flash" object (rack-flash3)
+    # => Required to get redirect_with_flash working
+    use Rack::Flash, accessorize: [:notice, :error]
+
     # => Helpers
     # => Allows us to manage the system at its core
     helpers Sinatra::RequiredParams     # => Required Parameters (ensures we have certain params for different routes)
     helpers Sinatra::RedirectWithFlash  # => Used to provide "flash" functionality with redirect helper
+
+    # => Includes
+    # => Functionality provided by various systems (some my own)
+    include SendGrid  # => used by SendGrid gem
+    include Auth      # => app/auth.rb (used for Warden)
 
   ##########################################################
   ##########################################################
@@ -138,9 +138,7 @@ class App < Sinatra::Base
       # Required to get Rails Assets gems working with Sprockets/Sinatra
       # https://github.com/rails-assets/rails-assets-sinatra#applicationrb
       if defined?(RailsAssets)
-        RailsAssets.load_paths.each do |path|
-          settings.sprockets.append_path(path)
-        end #RailsAssets
+        RailsAssets.load_paths.each { |path| settings.sprockets.append_path(path) }
       end #defined
 
       # => Paths

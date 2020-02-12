@@ -9,4 +9,6 @@
     != stylesheet_tag('app')
     != javascript_tag('app')
 
-  %body= yield
+  %body
+    = flash if flash.present?
+    = yield

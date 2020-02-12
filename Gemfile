@@ -20,10 +20,6 @@ source 'https://rubygems.org'
 # => https://github.com/cantino/huginn/blob/master/Gemfile#L4
 ruby [RUBY_VERSION, '2.7.0'].max
 
-# => Ruby 2.7.0
-# => Required to get working with latest Ruby (TEMPORARY)
-gem 'nokogiri', '~> 1.11.0.rc1'
-
 ###########################################
 ###########################################
 
