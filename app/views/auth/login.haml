@@ -1,6 +1,6 @@
 - # => Login
 - # => Used to provide us with the ability to help users log in
-= form_tag "/login", class: :login do
-    = text_field_tag :email,    placeholder: "Email"
-    = text_field_tag :password, placeholder: "Password"
-    = submit_tag
+= form_tag "/login", class: :login, data: { parsley: {validate: 'true'}, required: {message: "Required"}} do
+  = text_field_tag :email,    placeholder: "Email",    required: true
+  = text_field_tag :password, placeholder: "Password", required: true
+  = submit_tag

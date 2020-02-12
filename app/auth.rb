@@ -12,6 +12,7 @@
 ## In order to get it working properly, we need to ensure we have included the file appropriately
 ## --
 ## Think of this as a means to extract functionality from the base app.rb
+## https://github.com/sklise/sinatra-warden-example
 ##########################################################
 ##########################################################
 
