@@ -16,6 +16,16 @@ source 'https://rubygems.org'
 ###########################################
 ###########################################
 
+# => RailsAssets
+# => This is not reliable, and may require refactoring (12/02/2020)
+# => It also needs to embody the gem inside the source block (new update)
+source 'https://rails-assets.org' do
+  gem 'rails-assets-jquery' # => JQuery
+end
+
+###########################################
+###########################################
+
 # => Ruby
 # => https://github.com/cantino/huginn/blob/master/Gemfile#L4
 ruby [RUBY_VERSION, '2.7.0'].max

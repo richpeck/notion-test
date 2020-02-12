@@ -12,6 +12,7 @@ GIT
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     activemodel (6.0.2.1)
       activesupport (= 6.0.2.1)
@@ -65,6 +66,7 @@ GEM
       rack
     rack-protection (2.0.8.1)
       rack
+    rails-assets-jquery (3.4.1)
     rake (12.3.3)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
@@ -133,6 +135,7 @@ DEPENDENCIES
   pg
   puma
   rack-flash3
+  rails-assets-jquery!
   rake
   require_all (~> 3.0)
   sass (~> 3.7, >= 3.7.4)

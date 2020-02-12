@@ -1,6 +1,6 @@
 - # => Login
 - # => Used to provide us with the ability to help users log in
-= form_tag "/login" do
-    = text_field_tag :email
-    = text_field_tag :password
+= form_tag "/login", class: :login do
+    = text_field_tag :email,    placeholder: "Email"
+    = text_field_tag :password, placeholder: "Password"
     = submit_tag

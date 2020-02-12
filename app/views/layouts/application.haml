@@ -10,5 +10,5 @@
     != javascript_tag('app')
 
   %body
-    = flash if flash.present?
+    = haml :'partials/flash', layout: false if flash.keys.any? # => required because it would just show {}
     = yield

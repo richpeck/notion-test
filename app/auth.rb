@@ -103,6 +103,7 @@ module Auth
 
       # => Login (GET)
       # => Standard login form (no need to set anything except the HTML elements)
+      # => Need to ensure users are redirected to index if they are logged in
       get "/#{@@login}" do
         haml :'auth/login'
       end
@@ -126,7 +127,7 @@ module Auth
       # => Where to send the user if they are not authorized to view a page (IE they hit a page, and it redirects them to the unauthorized page)
       post "/#{@@unauth}" do
         session[:return_to] ||= env['warden.options'][:attempted_path]
-        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in"
+        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in", notice: "Test"
       end
 
       #############################################

@@ -75,7 +75,7 @@ class App < Sinatra::Base
     # => Flash
     # => Allows us to use the "flash" object (rack-flash3)
     # => Required to get redirect_with_flash working
-    use Rack::Flash, accessorize: [:notice, :error]
+    use Rack::Flash, accessorize: [:notice, :error], sweep: true
 
     # => Helpers
     # => Allows us to manage the system at its core
@@ -137,9 +137,7 @@ class App < Sinatra::Base
       # RailsAssets
       # Required to get Rails Assets gems working with Sprockets/Sinatra
       # https://github.com/rails-assets/rails-assets-sinatra#applicationrb
-      if defined?(RailsAssets)
-        RailsAssets.load_paths.each { |path| settings.sprockets.append_path(path) }
-      end #defined
+      RailsAssets.load_paths.each { |path| settings.sprockets.append_path(path) } if defined?(RailsAssets)
 
       # => Paths
       # => Used to add assets to asset pipeline
