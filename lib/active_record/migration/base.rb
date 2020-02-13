@@ -47,7 +47,7 @@ class ActiveRecord::Migration
            execute("CREATE TRIGGER before_insert_#{table} BEFORE INSERT ON associations FOR EACH ROW SET new.uuid = uuid();")
          when :SQLite
            # Nothing to do
-         when :Postgres
+         when :PostgreSQL
            enable_extension 'uuid-ossp' # => http://theworkaround.com/2015/06/12/using-uuids-in-rails.html#postgresql
            enable_extension 'chkpass'   # => https://stackoverflow.com/a/36708013/1143732
        else
