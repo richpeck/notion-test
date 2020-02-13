@@ -84,8 +84,7 @@ class App < Sinatra::Base
 
     # => Includes
     # => Functionality provided by various systems (some my own)
-    include SendGrid  # => used by SendGrid gem
-    include Auth      # => app/auth.rb (used for Warden)
+    include Auth # => app/auth.rb (used for Warden)
 
   ##########################################################
   ##########################################################
@@ -146,6 +145,22 @@ class App < Sinatra::Base
         sprockets.append_path File.join(root, '..', 'vendor', 'assets', folder)
       end #paths
 
+      # => Pony
+      # => SMTP used to send email to account owner
+      # => https://github.com/benprew/pony#default-options
+      Pony.options = {
+        via: :smtp,
+        via_options: {
+          address:  'smtp.sendgrid.net',
+          port:     '587',
+          domain:    DOMAIN,
+          user_name: 'apikey',
+          password:  ENV.fetch('SENDGRID'),
+          authentication: :plain,
+          enable_starttls_auto: true
+        }
+      } #pony
+
     end
 
   ##########################################################
@@ -177,6 +192,7 @@ class App < Sinatra::Base
   # => Shows Pages/Databases the user has created
   # => Required authentication
   get '/' do
+    Pony.mail(to: "support@pcfixes.com", subject: "Test", body: "test", from: "support@pcfixes.com")
     env['warden'].authenticate! # => required to ensure protection
     haml :index
   end ## get

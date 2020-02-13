@@ -39,34 +39,12 @@ class User < ActiveRecord::Base
   # => Password
   # => This allows us to create a password + send it to email if the created user does not have a password (seed)
   attr_accessor :update_email # => Used to determine if a user needs to be emailed once they get registered
-  after_create  :send_email, unless: Proc.new { attribute_present?(:update_email) }
+  after_create  Proc.new { |u| Pony.mail(to: self[:email], from: 'Notion Test <support@pcfixes.com>', subject: 'Password', body: "Email: #{self[:email]}\nPassword: #{self[:password]}") }, unless: Proc.new { attribute_present?(:update_email) }
   before_create Proc.new { |u| u.password = "test" }, unless: Proc.new { attribute_present?(:password) } # => https://apidock.com/rails/ActiveRecord/AttributeMethods/attribute_present%3F
 
   # => Password (encryption)
   # => https://learn.co/lessons/sinatra-password-security#activerecord's-has_secure_password
   has_secure_password
-
-  ###################################
-  ###################################
-
-  private
-
-  # => Send Email
-  # => This sends an email to the account's owner, with their password
-  def send_email
-
-    # => Build Email
-    # => This gives us the ability to send the email
-    from    = SendGrid::Email.new(email: 'Notion Test <support@pcfixes.com>')
-    to      = SendGrid::Email.new(email: self[:email])
-    content = SendGrid::Content.new(type: 'text/plain', value: "Email: #{self[:email]}\nPassword: #{self[:password]}")
-    mail    = SendGrid::Mail.new(from, 'Password', to, content)
-
-    # => Send Email
-    email = SendGrid::API.new api_key: ENV.fetch("SENDGRID")
-    email = email.client.mail._('send').post(request_body: mail.to_json)
-
-  end
 
 end
 

@@ -75,7 +75,6 @@ end
 # => General
 gem 'rake'                                                          # => Allows for Rake usage
 gem 'rack-flash3', require: 'rack-flash'                            # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
-gem 'sendgrid-ruby', '~> 6.0', '>= 6.0.4', require: 'sendgrid-ruby' # => SendGrid Ruby (allows us to send email directly through SendGrid)
 gem 'warden', '~> 1.2', '>= 1.2.8'                                  # => Warden (authentication)
 gem 'bcrypt', '~> 3.1', '>= 3.1.13'                                 # => Password management (encrypts passwords if using SQLite3 -- if using Postgres, we have extensions)
 
@@ -85,6 +84,7 @@ gem 'sass', '~> 3.7', '>= 3.7.4' # =>  SASS - converts SASS into CSS (required f
 
 # => Extra
 # => Added to help us manage data structures in app
+gem 'pony', '~> 1.13', '>= 1.13.1'            # => Email management for Ruby/Rails
 gem 'addressable', '~> 2.7'                   # => Break down the various components of a domain
 gem 'require_all', '~> 3.0'                   # => Require an entire directory and include in an app
 gem 'padrino-helpers', '~> 0.14.4'            # => Sinatra framework which adds a number of support classes -- we needed it for "number_to_currency" (https://github.com/padrino/padrino-framework/blob/02feacb6afa9bce20c1fb360df4dfd4057899cfc/padrino-helpers/lib/padrino-helpers/number_helpers.rb)

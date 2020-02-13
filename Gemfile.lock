@@ -48,6 +48,9 @@ GEM
     io-console (0.5.5)
     irb (1.2.1)
       reline (>= 0.0.1)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.2)
     minitest (5.14.0)
     multi_json (1.14.1)
     mustermann (1.1.1)
@@ -59,6 +62,8 @@ GEM
       tilt (>= 1.4.1, < 3)
     padrino-support (0.14.4)
     pg (1.2.2-x64-mingw32)
+    pony (1.13.1)
+      mail (>= 2.0)
     public_suffix (4.0.3)
     puma (4.3.1)
       nio4r (~> 2.0)
@@ -78,14 +83,11 @@ GEM
       io-console (~> 0.5)
     require_all (3.0.0)
     ruby2_keywords (0.0.2)
-    ruby_http_client (3.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sendgrid-ruby (6.0.4)
-      ruby_http_client (~> 3.3.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -137,6 +139,7 @@ DEPENDENCIES
   irb
   padrino-helpers (~> 0.14.4)
   pg
+  pony (~> 1.13, >= 1.13.1)
   puma
   rack-flash3
   rails-assets-jquery!
@@ -144,7 +147,6 @@ DEPENDENCIES
   rake
   require_all (~> 3.0)
   sass (~> 3.7, >= 3.7.4)
-  sendgrid-ruby (~> 6.0, >= 6.0.4)
   sinatra (~> 2.0, >= 2.0.7)
   sinatra-activerecord (~> 2.0, >= 2.0.14)
   sinatra-asset-pipeline (~> 2.2)!
