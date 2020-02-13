@@ -21,7 +21,7 @@ class CreateUsers < ActiveRecord::Migration::Base # => lib/active_record/migrati
   def up
     create_table table, options do |t|
       t.string :email                                                            # => email
-      t.string :password                                                         # => password
+      t.string :password_digest                                                  # => password
       t.send (adapter.to_sym == :SQLite ? :string : :inet), :last_signed_in_ip   # => last_signed_in_ip
       t.datetime :last_signed_in_at                                              # => last_signed_in_at
       t.timestamps                                                               # => created_at, updated_at

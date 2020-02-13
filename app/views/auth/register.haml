@@ -1,0 +1,6 @@
+- # => Login
+- # => Used to provide us with the ability to help users log in
+= form_tag "/login", class: :login, data: { parsley: {validate: 'true', required: {message: "Required"}}} do
+  = email_field_tag    'user[email]',    placeholder: "Email",    required: true, data: { parsley: { type: :email, minlength: 5 }}
+  = password_field_tag 'user[password]', placeholder: "Password", required: true, data: { parsley: { type: :password, minlength: 6, "minlength-message" => "Come on! You need to enter at least a 20 character comment.." }}
+  = submit_tag

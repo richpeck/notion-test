@@ -15,7 +15,7 @@
 
 ## User ##
 ## This only stores "user" data (we have "profile" for extras)
-## id | email | password (encrypted) | created_at | updated_at ##
+## id | email | password_digest (encrypted) | created_at | updated_at ##
 class User < ActiveRecord::Base
 
   # => Associations
@@ -42,15 +42,9 @@ class User < ActiveRecord::Base
   after_create  :send_email, unless: Proc.new { attribute_present?(:update_email) }
   before_create Proc.new { |u| u.password = "test" }, unless: Proc.new { attribute_present?(:password) } # => https://apidock.com/rails/ActiveRecord/AttributeMethods/attribute_present%3F
 
-  ###################################
-  ###################################
-
-  # => Authenticate
-  # => Determines if the user is authenticated or not
-  # => https://github.com/sklise/sinatra-warden-example#modelrb-reopened
-  def authenticate(attempted_password)
-    self.password == attempted_password
-  end
+  # => Password (encryption)
+  # => https://learn.co/lessons/sinatra-password-security#activerecord's-has_secure_password
+  has_secure_password
 
   ###################################
   ###################################
