@@ -13,6 +13,13 @@
 ## id | user_id | associatiable_type | associatiable_id | associated_type | associated_id | created_at | updated_at ##
 class CreateAssociations < ActiveRecord::Migration::Base # => lib/active_record/migration/base.rb
   def up
+
+    # => Enable Extensions
+    # => This is aimed at getting the various databases running with appropriate extensions (UUID/Password etc)
+    setup_extensions
+
+    # => Table
+    # => Allows us to get the table running
     create_table table, options do |t|
 
       # => References
@@ -24,7 +31,8 @@ class CreateAssociations < ActiveRecord::Migration::Base # => lib/active_record/
       # => Required for upsert_all (ActiveRecord 6+)
       t.index [:associatiable_type, :associatiable_id, :associated_type, :associated_id], unique: true, name: 'association_index' # => RPECK 24/01/2020 don't need unique relation (limits line_items per order)
     end
-  end
+  end #table
+
 end
 
 ####################################################################

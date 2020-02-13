@@ -40,15 +40,16 @@ class ActiveRecord::Migration
 
       # http://stackoverflow.com/a/5665974/1143732
       # Set "plugin" for UUID BEFORE using it
-      def setup_uuid
+      def setup_extensions
        case adapter.to_sym
-         when :mysql2
+       when :MySQL
            execute("DROP TRIGGER IF EXISTS before_insert_#{table};") #http://stackoverflow.com/a/5945220/1143732
            execute("CREATE TRIGGER before_insert_#{table} BEFORE INSERT ON associations FOR EACH ROW SET new.uuid = uuid();")
-         when :sqlite3
+         when :SQLite
            # Nothing to do
-         when :postgresql
+         when :Postgres
            enable_extension 'uuid-ossp' # => http://theworkaround.com/2015/06/12/using-uuids-in-rails.html#postgresql
+           enable_extension 'chkpass'   # => https://stackoverflow.com/a/36708013/1143732
        else
          raise NotImplementedError, "Unknown adapter type '#{adapter}'"
        end
