@@ -77,7 +77,7 @@ gem 'rake'                                                          # => Allows 
 gem 'rack-flash3', require: 'rack-flash'                            # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
 gem 'sendgrid-ruby', '~> 6.0', '>= 6.0.4', require: 'sendgrid-ruby' # => SendGrid Ruby (allows us to send email directly through SendGrid)
 gem 'warden', '~> 1.2', '>= 1.2.8'                                  # => Warden (authentication)
-gem 'bcrypt', '~> 3.1', '>= 3.1.13', group: :development            # => Password management (encrypts passwords if using SQLite3 -- if using Postgres, we have extensions)
+gem 'bcrypt', '~> 3.1', '>= 3.1.13'                                 # => Password management (encrypts passwords if using SQLite3 -- if using Postgres, we have extensions)
 
 # => Asset Management
 gem 'uglifier', '~> 4.2'         # => Uglifier - Javascript minification (required to get minification working)
