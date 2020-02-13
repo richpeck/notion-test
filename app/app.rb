@@ -192,7 +192,6 @@ class App < Sinatra::Base
   # => Shows Pages/Databases the user has created
   # => Required authentication
   get '/' do
-    Pony.mail(to: "support@pcfixes.com", subject: "Test", body: "test", from: "support@pcfixes.com")
     env['warden'].authenticate! # => required to ensure protection
     haml :index
   end ## get

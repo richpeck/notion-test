@@ -1,7 +1,7 @@
 - # => Register
 - # => Allows users to create account on the platform
-= form_for @user, url: '/register', method: :post, class: :register do |f|
+= form_for @user, '/register', class: :login, data: { parsley: {validate: 'true', trigger: 'keyup', required: {message: "Required"}}} do |f|
   = f.email_field    :email,                 placeholder: "Email",    required: true, minlength: 5, data: { parsley: { type: :email }}
   = f.password_field :password,              placeholder: "Password", required: true, minlength: 6, data: { parsley: { type: :password }}
-  = f.password_field :password_confirmation, placeholder: "Confirm", required: true, minlength: 6, data: { parsley: { type: :password }}
+  = f.password_field :password_confirmation, placeholder: "Confirm",  required: true, minlength: 6, data: { parsley: { type: :password }}
   = submit_tag
