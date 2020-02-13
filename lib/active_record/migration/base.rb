@@ -49,7 +49,6 @@ class ActiveRecord::Migration
            # Nothing to do
          when :PostgreSQL
            enable_extension 'uuid-ossp' # => http://theworkaround.com/2015/06/12/using-uuids-in-rails.html#postgresql
-           enable_extension 'chkpass'   # => https://stackoverflow.com/a/36708013/1143732
        else
          raise NotImplementedError, "Unknown adapter type '#{adapter}'"
        end
