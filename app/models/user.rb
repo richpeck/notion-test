@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   has_many :favorites, through: :associations, source: :associatiable, source_type: "Page" # => User 1 | Page 15
 
   # => Validations
-  validates :email, presence: true
+  validates :email, uniqueness: true, presence: true
 
   # => Password
   # => This allows us to create a password + send it to email if the created user does not have a password (seed)

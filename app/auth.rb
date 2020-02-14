@@ -76,11 +76,10 @@ module Auth
       # => Password allows us to manage the system
       Warden::Strategies.add(:password) do
         def valid?
-          params['user'] && params['user']['username'] && params['user']['password']
+          params['user'] && params['user']['email'] && params['user']['password']
         end
 
         def authenticate!
-          p params
           user = User.find_by email: params['user']['email'] # => email is unique, so any records will be the only record
 
           if user.nil?
@@ -146,18 +145,13 @@ module Auth
       # => Register (POST)
       # => Create the user from the sent items
       post "/#{@@register}" do
-        @user = User.create user_params
-      end
-
-      #############################################
-      #############################################
-
-      private
-
-      # => Params
-      # => This allows you to pull the user's params through the app
-      def user_params
-        params.require(:user).permit(:email, :password, :password_confirmation)
+        required_params :user # => ensure we have the :user param set
+        @user = User.new params.dig("user")
+        if @user.save
+          redirect "/"
+        else
+          haml :'auth/register'
+        end
       end
 
       #############################################
