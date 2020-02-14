@@ -111,7 +111,7 @@ class App < Sinatra::Base
 
     # => Locales
     # => This had to be included to ensure we can use the various locales required by Auth + others
-    load_locales File.join(root, "config", "locales") # => requires Sinatra::I18nSupport 
+    load_locales File.join(root, "..", "config", "locales") # => requires Sinatra::I18nSupport
 
   ##########################################################
   ##########################################################

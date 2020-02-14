@@ -114,7 +114,7 @@ module Auth
       # => Where the login form submits to (allows us to process the request)
       post "/#{@@login}" do
         env['warden'].authenticate!
-        redirect (session[:return_to].nil? ? '/' : session[:return_to]), success: "Successfully Logged In"
+        redirect (session[:return_to].nil? ? '/' : session[:return_to]), notice: I18n.t('auth.login.success')
       end
 
       # => Logout (GET)
@@ -122,14 +122,14 @@ module Auth
       get "/#{@@logout}" do
         env['warden'].raw_session.inspect
         env['warden'].logout
-        redirect '/', success: "Successfully Logged Out"
+        redirect '/', success: I18n.t('auth.login.success')
       end
 
       # => Unauthenticated (POST)
       # => Where to send the user if they are not authorized to view a page (IE they hit a page, and it redirects them to the unauthorized page)
       post "/#{@@unauth}" do
         session[:return_to] ||= env['warden.options'][:attempted_path]
-        redirect "/#{@@login}", error: env['warden.options'][:message] || "You must log in"
+        redirect "/#{@@login}", error: env['warden.options'][:message] || I18n.t('auth.login.failure')
       end
 
       #############################################
@@ -149,7 +149,7 @@ module Auth
         @user = User.new params.dig("user")
         if @user.save
           env['warden'].set_user(@user)
-          redirect "/", notice: "Successfully Logged In!"
+          redirect "/", notice: I18n.t('auth.login.success')
         else
           haml :'auth/register'
         end
