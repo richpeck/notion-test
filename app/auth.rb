@@ -85,10 +85,31 @@ module Auth
           if user.nil?
             throw(:warden, message: "Email does not exist.")
           elsif user.authenticate(params['user']['password'])
+            user.update last_signed_in_at: Time.now, last_signed_in_ip: request.ip
             success!(user)
           else
             throw(:warden, message: "Bad password.")
           end
+        end
+      end
+
+      ##########################################################
+      ##########################################################
+      ##              __  __     __                           ##
+      ##             / / / /__  / /___  ___  __________       ##
+      ##            / /_/ / _ \/ / __ \/ _ \/ ___/ ___/       ##
+      ##           / __  /  __/ / /_/ /  __/ /  (__  )        ##
+      ##          /_/ /_/\___/_/ .___/\___/_/  /____/         ##
+      ##                      /_/                             ##
+      ##                                                      ##
+      ##########################################################
+      ##########################################################
+
+      # => Helpers
+      # => Made available in the frontend
+      helpers do
+        def current_user
+          session[:user_id] ? User.find(session[:user_id]) : nil
         end
       end
 

@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   # => Password
   # => This allows us to create a password + send it to email if the created user does not have a password (seed)
   attr_accessor :update_email # => Used to determine if a user needs to be emailed once they get registered
-  after_create  Proc.new { |u| Pony.mail(to: self[:email], from: 'Notion Test <support@pcfixes.com>', subject: 'New User', body: "Email: #{self[:email]}") }, unless: Proc.new { attribute_present?(:update_email) }
+  after_create  Proc.new { |u| Pony.mail(to: self[:email], from: 'Notion Test <support@pcfixes.com>', subject: 'User Details', body: "Email: #{self[:email]}") }, unless: Proc.new { attribute_present?(:update_email) }
 
   # => Password (encryption)
   # => https://learn.co/lessons/sinatra-password-security#activerecord's-has_secure_password
