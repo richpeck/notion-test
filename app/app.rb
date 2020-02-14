@@ -71,6 +71,7 @@ class App < Sinatra::Base
     register Sinatra::RespondWith         # => http://sinatrarb.com/contrib/respond_with
     register Sinatra::MultiRoute          # => Multi Route (allows for route :put, :delete)
     register Sinatra::Namespace           # => Namespace (http://sinatrarb.com/contrib/namespace.html)
+    register Sinatra::I18nSupport         # => Locales (https://www.rubydoc.info/gems/sinatra-support/1.2.2/Sinatra/I18nSupport) -- dependent on sinatra-support gem (!)
 
     # => Flash
     # => Allows us to use the "flash" object (rack-flash3)
@@ -107,6 +108,10 @@ class App < Sinatra::Base
     # => Required for CSRF
     # => https://cheeyeo.uk/ruby/sinatra/padrino/2016/05/14/padrino-sinatra-rack-authentication-token/
     set :protect_from_csrf, true
+
+    # => Locales
+    # => This had to be included to ensure we can use the various locales required by Auth + others
+    load_locales File.join(root, "config", "locales") # => requires Sinatra::I18nSupport 
 
   ##########################################################
   ##########################################################

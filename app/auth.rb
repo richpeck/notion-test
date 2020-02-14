@@ -148,7 +148,8 @@ module Auth
         required_params :user # => ensure we have the :user param set
         @user = User.new params.dig("user")
         if @user.save
-          redirect "/"
+          env['warden'].set_user(@user)
+          redirect "/", notice: "Successfully Logged In!"
         else
           haml :'auth/register'
         end

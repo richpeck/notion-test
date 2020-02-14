@@ -42,6 +42,7 @@ gem 'sinatra-asset-pipeline', '~> 2.2', github: 'richpeck/sinatra-asset-pipeline
 gem 'sinatra-contrib', '~> 2.0', '>= 2.0.7',                                       require: 'sinatra/contrib'                     # => Allows us to add "contrib" library to Sinatra app (respond_with) -> http://sinatrarb.com/contrib/
 gem 'sinatra-cors', '~> 1.1',                                                      require: 'sinatra/cors'                        # => Protect app via CORS
 gem 'sinatra-redirect-with-flash', '~> 0.2.1',                                     require: 'sinatra/redirect_with_flash'         # => Redirect with Flash (allows use of redirect) -> https://github.com/vast/sinatra-redirect-with-flash
+gem 'sinatra-support', '~> 1.2', '>= 1.2.2',                                       require: 'sinatra/support/i18nsupport'         # => Sinatra Support (helpers for Sinatra - https://github.com/sinefunc/sinatra-support) (used for LOCALES)
 
 # => Database
 # => Allows us to determine exactly which db we're using
@@ -59,7 +60,6 @@ gem 'puma' # => web server
 # => Environments
 # => Allows us to load gems depending on the environment
 group :development do
-  gem 'irb'                            # => Console
   gem 'dotenv', require: 'dotenv/load' # => ENV vars (local) -- https://github.com/bkeepers/dotenv#sinatra-or-plain-ol-ruby
   gem 'foreman'                        # => Allows us to run the app in development/testing
   gem 'byebug'                         # => Debug tool for Ruby
@@ -73,10 +73,11 @@ end
 ####################
 
 # => General
-gem 'rake'                                                          # => Allows for Rake usage
-gem 'rack-flash3', require: 'rack-flash'                            # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
-gem 'warden', '~> 1.2', '>= 1.2.8'                                  # => Warden (authentication)
-gem 'bcrypt', '~> 3.1', '>= 3.1.13'                                 # => Password management (encrypts passwords if using SQLite3 -- if using Postgres, we have extensions)
+gem "i18n", require: 'sinatra/support/i18nsupport' # => Locales support (allows us to manage various responses from central location) - https://www.rubydoc.info/gems/sinatra-support/1.2.2/Sinatra/I18nSupport
+gem 'rake'                               # => Allows for Rake usage
+gem 'rack-flash3', require: 'rack-flash' # => Flash messages for Rack apps (required for "redirect_with_flash" -- #L44)
+gem 'warden', '~> 1.2', '>= 1.2.8'       # => Warden (authentication)
+gem 'bcrypt', '~> 3.1', '>= 3.1.13'      # => Password management (encrypts passwords if using SQLite3 -- if using Postgres, we have extensions)
 
 # => Asset Management
 gem 'uglifier', '~> 4.2'         # => Uglifier - Javascript minification (required to get minification working)
