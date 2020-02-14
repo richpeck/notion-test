@@ -108,9 +108,19 @@ module Auth
       # => Helpers
       # => Made available in the frontend
       helpers do
+
+        # => Current User
+        # => Returns @user object for currently logged in user
         def current_user
-          session[:user_id] ? User.find(session[:user_id]) : nil
+          env['warden'].user
         end
+
+        # => Logged in?
+        # => User Logged In?
+        def user_signed_in?
+          !env['warden'].user.nil?
+        end
+
       end
 
       ##########################################################
