@@ -10,5 +10,8 @@
     != javascript_tag('app')
 
   %body
-    = haml :'partials/flash', layout: false if flash.keys.any? # => required because it would just show {}
-    = yield
+    %header
+      = link_to (user_signed_in? ? "Logout" : "Login"), (user_signed_in? ? "/logout" : "/login"), data: { confirm: "Are You Sure?" }
+    %main
+      = haml :'partials/flash', layout: false if flash.keys.any? # => required because it would just show {}
+      = yield

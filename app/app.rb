@@ -58,12 +58,6 @@ class App < Sinatra::Base
   ##########################################################
   ##########################################################
 
-    # => Sessions
-    # => Used by Rack::Flash
-    # => https://github.com/nakajima/rack-flash#sinatra
-    # => https://github.com/vast/sinatra-redirect-with-flash
-    enable :sessions # => used by RedirectWithFlash
-
     # => Register
     # => This allows us to call the various extensions for the system
     register Sinatra::Cors                # => Protects from unauthorized domain activity
@@ -76,6 +70,7 @@ class App < Sinatra::Base
     # => Flash
     # => Allows us to use the "flash" object (rack-flash3)
     # => Required to get redirect_with_flash working
+    use Rack::Session::Cookie, secret: SECRET # => could use enable :sessions instead (http://sinatrarb.com/faq.html#sessions)
     use Rack::Flash, accessorize: [:notice, :error], sweep: true
 
     # => Helpers

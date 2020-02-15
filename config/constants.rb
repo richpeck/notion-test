@@ -15,6 +15,7 @@
 DOMAIN            = ENV.fetch('DOMAIN', 'notion-test-rpeck.herokuapp.com') ## used for CORS and other funtionality -- ENV var gives flexibility
 DEBUG             = ENV.fetch('DEBUG', false) != false ## this needs to be evaluated this way because each ENV variable returns a string ##
 ENVIRONMENT       = ENV.fetch('RACK_ENV', 'development')
+SECRET            = ENV.fetch('SECRET', '62uao31c7d7j7dy6se9hs5auxyupmay')
 
 ##########################################################
 ##########################################################

@@ -83,12 +83,12 @@ module Auth
           user = User.find_by email: params['user']['email'] # => email is unique, so any records will be the only record
 
           if user.nil?
-            throw(:warden, message: "Email does not exist.")
+            throw(:warden, message: "Email does not exist")
           elsif user.authenticate(params['user']['password'])
             user.update last_signed_in_at: Time.now, last_signed_in_ip: request.ip
             success!(user)
           else
-            throw(:warden, message: "Bad password.")
+            throw(:warden, message: "Bad password")
           end
         end
       end
@@ -112,14 +112,14 @@ module Auth
         # => Current User
         # => Returns @user object for currently logged in user
         def current_user
-          env['warden'].user
-        end
+          env['warden'].user # => https://github.com/wardencommunity/warden/wiki/Users#accessing-a-user
+        end #current_user
 
         # => Logged in?
         # => User Logged In?
         def user_signed_in?
           !env['warden'].user.nil?
-        end
+        end #user_signed_in
 
       end
 
@@ -151,7 +151,6 @@ module Auth
       # => Logout (GET)
       # => Request to log out of the system (allows us to perform session destroy)
       get "/#{@@logout}" do
-        env['warden'].raw_session.inspect
         env['warden'].logout
         redirect '/', success: I18n.t('auth.login.success')
       end
