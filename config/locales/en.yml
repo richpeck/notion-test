@@ -32,7 +32,8 @@
 en:
   auth:
     login:
-      success: Successfully Logged In
-      failure: Login Required
+      success:   Successfully Logged In
+      failure:   Login Required
+      persisted: Already Logged In
     logout:
       success: Successfully Logged Out

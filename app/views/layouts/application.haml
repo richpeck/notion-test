@@ -11,7 +11,7 @@
 
   %body
     %header
-      = link_to (user_signed_in? ? "Logout" : "Login"), (user_signed_in? ? "/logout" : "/login"), data: { confirm: "Are You Sure?" }
+      = link_to (user_signed_in? ? "Logout" : "Login"), (user_signed_in? ? "/logout" : "/login")
     %main
       = haml :'partials/flash', layout: false if flash.keys.any? # => required because it would just show {}
       = yield
