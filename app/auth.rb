@@ -160,7 +160,7 @@ module Auth
 
       # => Logout (GET)
       # => Request to log out of the system (allows us to perform session destroy)
-      get "/#{@@logout}" do
+      delete "/#{@@logout}" do
         env['warden'].logout
         redirect '/', success: I18n.t('auth.login.success')
       end

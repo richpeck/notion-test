@@ -1,3 +1,8 @@
-- # Test
-= user_signed_in?
-= current_user.last_signed_in_ip
+- # Pages
+- # Simple thing which shows the pages a user has
+- @pages.each do |page|
+  = @page.title
+
+- # Add Page
+- # Allows you to add a new page to your roster
+= link_to I18n.t('pages.new'), "/pages/new"

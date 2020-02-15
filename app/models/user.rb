@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   has_one :profile, dependent: :destroy, inverse_of: :user
   before_create :build_profile, unless: :profile
 
+  # => Pages
+  # => has_many :pages and a bunch of other stuff
+  has_many :pages
+
   # => Delegations
   # => @user.name (no prefix)
   delegate :name, :first_name, to: :profile # => @user.name

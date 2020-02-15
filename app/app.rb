@@ -67,11 +67,12 @@ class App < Sinatra::Base
     register Sinatra::Namespace           # => Namespace (http://sinatrarb.com/contrib/namespace.html)
     register Sinatra::I18nSupport         # => Locales (https://www.rubydoc.info/gems/sinatra-support/1.2.2/Sinatra/I18nSupport) -- dependent on sinatra-support gem (!)
 
-    # => Flash
+    # => Rack (Flash/Sessions etc)
     # => Allows us to use the "flash" object (rack-flash3)
     # => Required to get redirect_with_flash working
     use Rack::Session::Cookie, secret: SECRET # => could use enable :sessions instead (http://sinatrarb.com/faq.html#sessions)
     use Rack::Flash, accessorize: [:notice, :error], sweep: true
+    use Rack::MethodOverride # => used for DELETE requests (logout etc) - https://stackoverflow.com/a/5169913 // http://sinatrarb.com/configuration.html#method_override---enabledisable-the-post-_method-hack
 
     # => Helpers
     # => Allows us to manage the system at its core
@@ -192,8 +193,19 @@ class App < Sinatra::Base
   # => Shows Pages/Databases the user has created
   # => Required authentication
   get '/' do
+
+    # => Authentication
+    # => Allows you to load the page if required
     env['warden'].authenticate! # => required to ensure protection
+
+    # => Objects
+    # => @pages = the pages of current_user
+    @pages = current_user.pages
+
+    # => Action
+    # => Show the "index" page (app/views/index.haml)
     haml :index
+
   end ## get
 
   ##############################################################
