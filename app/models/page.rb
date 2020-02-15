@@ -21,7 +21,7 @@ class Page < ActiveRecord::Base
 
   # => Associations
   # => Give us the ability to connect with other models
-  belongs_to :user, required: true
+  belongs_to :user, required: true, inverse_of: :pages
   belongs_to :database # => allows us to store a page inside a database (one database per page presently)
 
   # => Databases

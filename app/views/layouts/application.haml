@@ -11,7 +11,7 @@
 
   %body
     %header
-      = button_to (user_signed_in? ? "Logout" : "Login"), (user_signed_in? ? "/logout" : "/login"), method: (user_signed_in? ? :delete : :get)
+      = haml :'partials/auth', layout: false 
     %main
       = haml :'partials/flash', layout: false if flash.keys.any? # => required because it would just show {}
       = yield

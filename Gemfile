@@ -22,6 +22,7 @@ source 'https://rubygems.org'
 source 'https://rails-assets.org' do
   gem 'rails-assets-jquery'    # => JQuery    (https://github.com/jquery/jquery)
   gem 'rails-assets-parsleyjs' # => ParselyJS (https://github.com/guillaumepotier/Parsley.js)
+  gem 'rails-assets-bootstrap' # => Bootstrap (https://github.com/twbs/bootstrap)
 end
 
 ###########################################
@@ -30,6 +31,10 @@ end
 # => Ruby
 # => https://github.com/cantino/huginn/blob/master/Gemfile#L4
 ruby [RUBY_VERSION, '2.7.0'].max
+
+# => Ruby 2.7.0
+# => Required to get working with latest Ruby (TEMPORARY)
+gem 'nokogiri', '~> 1.11.0.rc1'
 
 ###########################################
 ###########################################
@@ -105,6 +110,12 @@ gem 'activerecord',  '~> 6.0', '>= 6.0.2.1' # => Allows us to use AR 6.0.0.rc1+ 
 gem 'haml', '~> 5.1', '>= 5.1.2'      # => HAML
 gem 'titleize', '~> 1.4', '>= 1.4.1'  # => Titleize (for order line items)
 gem 'humanize', '~> 2.1', '>= 2.1.1'  # => Humanize (allows us to translate numbers to words)
+
+# => Assets
+# => Used to provide functionality to frontend (CSS/JS)
+group :assets do
+  gem 'data-confirm-modal', '~> 1.6', '>= 1.6.2', require: false
+end
 
 ###########################################
 ###########################################

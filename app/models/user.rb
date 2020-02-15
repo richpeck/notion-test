@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   # => Pages
   # => has_many :pages and a bunch of other stuff
-  has_many :pages
+  has_many :pages, inverse_of: :user
 
   # => Delegations
   # => @user.name (no prefix)

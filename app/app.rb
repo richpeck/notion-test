@@ -134,10 +134,17 @@ class App < Sinatra::Base
     # => https://github.com/petebrowne/sprockets-helpers#setup
     configure do
 
-      # RailsAssets
-      # Required to get Rails Assets gems working with Sprockets/Sinatra
-      # https://github.com/rails-assets/rails-assets-sinatra#applicationrb
+      # => RailsAssets
+      # => Required to get Rails Assets gems working with Sprockets/Sinatra
+      # => https://github.com/rails-assets/rails-assets-sinatra#applicationrb
       RailsAssets.load_paths.each { |path| settings.sprockets.append_path(path) } if defined?(RailsAssets)
+
+      # => Gems
+      # => Any gems in the "assets" group need to be loaded
+      Bundler.load.current_dependencies.select{|dep| dep.groups.include?(:assets) }.map(&:name).each do |gem| # => https://stackoverflow.com/a/35183285/1143732
+        sprockets.append_path File.join(Bundler.rubygems.find_name(gem).first.full_gem_path, 'vendor', 'assets', 'javascripts')
+        sprockets.append_path File.join(Bundler.rubygems.find_name(gem).first.full_gem_path, 'assets', 'javascripts')
+      end
 
       # => Paths
       # => Used to add assets to asset pipeline
