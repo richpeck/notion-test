@@ -134,11 +134,15 @@ module Auth
       ##########################################################
       ##########################################################
 
+      # => Before
       # => Prevent auth pages showing when logged in
       # => https://stackoverflow.com/a/17912053/1143732
-      before %r{\/(#{@@login}|#{@@register})} do
+      before %r{\/(#{@@login}|#{@@register}|#{@@unauth})} do
         redirect "/", notice: I18n.t('auth.login.persisted') if user_signed_in?
       end
+
+      ##########################################################
+      ##########################################################
 
       # => Login (GET)
       # => Standard login form (no need to set anything except the HTML elements)
